@@ -21,7 +21,7 @@ if gemini_key:
     genai.configure(api_key=gemini_key)
 
 # Safest text model that should exist for most keys with google-generativeai 0.7.x
-GEMINI_MODEL_NAME = "gemini-1.0-pro"
+GEMINI_MODEL_NAME = "gemini-1.5-flash"
 
 
 def get_conn():
