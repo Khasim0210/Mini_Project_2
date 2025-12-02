@@ -21,7 +21,7 @@ if gemini_key:
     genai.configure(api_key=gemini_key)
 
 # ✅ Use ONLY this model (your key should support it)
-GEMINI_MODEL_NAME = "gemini-1.0-pro"
+GEMINI_MODEL_NAME = "gemini-2.5-flash"
 
 
 def get_conn():
