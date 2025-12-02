@@ -20,8 +20,8 @@ gemini_key = st.secrets.get("GEMINI_API_KEY", os.environ.get("GEMINI_API_KEY"))
 if gemini_key:
     genai.configure(api_key=gemini_key)
 
-# Safest text model that should exist for most keys with google-generativeai 0.7.x
-GEMINI_MODEL_NAME = "gemini-1.5-flash"
+# ✅ Use ONLY this model (your key should support it)
+GEMINI_MODEL_NAME = "gemini-1.0-pro"
 
 
 def get_conn():
@@ -50,30 +50,27 @@ def check_password():
 
 def ask_gemini(prompt: str) -> str:
     """
-    Wrapper to call Gemini (google-generativeai 0.7.2).
-    Returns a short, clear answer or an error message.
+    Wrapper to call Gemini (google-generativeai 0.7.2) using gemini-1.0-pro.
     """
     if not gemini_key:
         return "No Gemini API key configured. Please set GEMINI_API_KEY in your environment or Streamlit secrets."
 
     try:
-        # Create model instance
+        # 🔹 Model instance (NO 1.5 MODELS HERE)
         model = genai.GenerativeModel(GEMINI_MODEL_NAME)
 
-        # You can pass a single string as the content for text-only use
         full_prompt = (
             "You are a helpful assistant for a sales database project. "
             "Answer clearly and briefly.\n\n"
             f"User: {prompt}"
         )
 
+        # For 0.7.2, generate_content is correct
         response = model.generate_content(full_prompt)
 
-        # response.text contains the generated text
         return response.text
 
     except Exception as e:
-        # Bubble up useful error info to the UI
         return f"Error talking to Gemini: {e}"
 
 
